@@ -1,0 +1,16 @@
+// Royalty logic for NFT sales
+address payable royaltyReceiver = payable(0x1b31ed3B6bcf1ebFf7F887f72E108155e4930416);
+uint256 public royaltyFee = 0.001 ether;
+
+function payRoyalty() internal {
+    require(address(this).balance >= royaltyFee, "Insufficient contract balance for royalty");
+    royaltyReceiver.transfer(royaltyFee);
+}
+
+// Example sale handler triggering royalty payout
+function sellNFT(uint256 tokenId, address buyer) external {
+    // Your existing sale logic (e.g. transferFrom, price handling, etc.)
+
+    // Send the royalty
+    payRoyalty();
+}
